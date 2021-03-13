@@ -39,19 +39,12 @@ document.getElementById('strictnessinfoToggle').addEventListener("mouseover",mor
 function save_options() {
 	var strictness = document.getElementById('strictness').value;
 	var debug = document.getElementById('debug').checked;
-	var tracking = document.getElementById('tracking').checked;
 
 	var levels = ['off', 'medium', 'strict'];
 	
-	if (tracking){
-		dsj_event_detail('set', 'strictness', levels.indexOf(strictness));
-		dsj_event_detail('set', 'debug', debug);
-	}
-
 	chrome.storage.sync.set({
 		strictness: strictness,
 		debug: debug,
-		tracking: tracking
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -59,9 +52,6 @@ function save_options() {
 		setTimeout(function() {
 			status.style.display="none";
 		}, 1000);
-		if (settings.tracking){
-			// initEvents();
-		}
 	});
 }
 
@@ -76,21 +66,10 @@ function restore_options() {
 	chrome.storage.sync.get({
 		strictness: 'medium',
 		debug: false,
-		tracking: true
 	}, function(settings) {
 		document.getElementById('strictness').value = settings.strictness;
 		document.getElementById('debug').checked = settings.debug;
-		document.getElementById('tracking').checked = settings.tracking;
 
-		if (settings.tracking){
-			if (!eventsLoaded){
-				// initEvents();
-			} else {
-				window['ga-disable-'+eventsCode] = false;
-			}
-		} else {
-			window['ga-disable-'+eventsCode] = true;
-		}
 	});
 }
 

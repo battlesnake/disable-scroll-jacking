@@ -1,3 +1,6 @@
+(This fork removes google analytics)
+
+
 ![Logo](extension/icons/icon128.png)
 
 ## 🚫 Disable Scroll Jacking
